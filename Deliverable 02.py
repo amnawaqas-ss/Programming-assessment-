@@ -1,38 +1,44 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QGridLayout, QWidget
-
-# Setting up Window 
+#Setting up window 
 class MyFirstWindow(QMainWindow):
+    """
+     Window for my game.
+        """
     def __init__(self):
         super().__init__()
-        
+
+        # Window setup for game
         self.setWindowTitle("WhackAMoleGame")
-        self.setFixedSize(500, 500)
-        
-        # Central widget setupn
-        central_widget = QWidget()
-        central_widget.setStyleSheet("background-color: #1a0933;") 
-        self.setCentralWidget(central_widget)
-        
-        # Lay out setup 
+        self.setFixedSize(400, 400)
+
+        # Making 4x4 grid layout
         grid_layout = QGridLayout()
         self.buttons = []
-        
+
         for row in range(4):
             row_buttons = []
             for col in range(4):
-                # Row and Column Setup
-                button = QPushButton(f"({row}, {col})")
+                button = QPushButton("")
                 button.setFixedSize(80, 80)
                 grid_layout.addWidget(button, row, col)
                 row_buttons.append(button)
-                button.clicked.connect(lambda clicked, r=row, c=col: self.button_clicked(r, c))
+                
+                # To print row and column
+                button.clicked.connect(lambda checked, r=row, c=col: self.button_clicked(r, c))
+                
             self.buttons.append(row_buttons)
-            
+
+        # Set central widget
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
         central_widget.setLayout(grid_layout)
-        
+
     def button_clicked(self, row, col):
-        print(f"button {row}, {col}")
+        """
+        For button click events to make sure grid coordinates.
+        """
+        print(f"Button {row}, col {col}")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
