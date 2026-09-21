@@ -11,7 +11,7 @@ class MyFirstWindow(QMainWindow):
         
         # Central widget setupn
         central_widget = QWidget()
-        central_widget.setStyleSheet("background-color: #1a0933;")  # Dark purple background
+        central_widget.setStyleSheet("background-color: #1a0933;") 
         self.setCentralWidget(central_widget)
         
         # Lay out setup 
