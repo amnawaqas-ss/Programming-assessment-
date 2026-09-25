@@ -14,10 +14,46 @@ class MyFirstWindow(QMainWindow):
         # Game timer
         self.game_duration = 40
         self.time_left = 40
-
+        
         # Window setup for game
         self.setWindowTitle("WhackAMoleGame")
         self.setFixedSize(400, 400)
+
+        # Theme of game
+        self.setStyleSheet("""
+            QMainWindow {
+                background-color: #1A0933;
+            }
+            QLabel {
+                color: #E2D4F7;
+                font-size: 15px;
+                font-weight: bold;
+            }
+            """)
+
+            # Button style
+        self.normal_button_style = """
+    QPushButton {
+        background-color: #2D124D;
+        border: 2px solid #5C2799;
+        border-radius: 8px;
+        color: white;
+        font-size: 14px;
+    }
+    QPushButton:hover {
+        background-color: #3D1866;
+    }
+"""
+        self.mole_button_style = """
+            QPushButton {
+                background-color: #A100FF;
+                border: 2px solid #E099FF;
+                border-radius: 8px;
+                color: #FFFFFF;
+                font-size: 15px;
+                font-weight: bold;
+            }
+        """
         
         # Score Variable and mole location
         self.score = 0
@@ -45,6 +81,7 @@ class MyFirstWindow(QMainWindow):
             for col in range(4):
                 button = QPushButton("")
                 button.setFixedSize(80, 80)
+                button.setStyleSheet(self.normal_button_style)
                 grid_layout.addWidget(button, row, col)
                 row_buttons.append(button)
                 
@@ -86,11 +123,13 @@ class MyFirstWindow(QMainWindow):
         if self.current_mole_pos:
             prev_row, prev_col = self.current_mole_pos
             self.buttons[prev_row][prev_col].setText("")
+            self.buttons[prev_row][prev_col].setStyleSheet(self.normal_button_style)
 
         row = random.randint(0, 3)
         col = random.randint(0, 3)
         self.current_mole_pos = (row, col)
         self.buttons[row][col].setText("mole")
+        self.buttons[row][col].setStyleSheet(self.mole_button_style)
 
     def button_clicked(self, row, col):
         """
@@ -128,11 +167,13 @@ class MyFirstWindow(QMainWindow):
         if self.current_mole_pos:
             r, c = self.current_mole_pos
             self.buttons[r][c].setText("")
+            self.buttons[r][c].setStyleSheet(self.normal_button_style)
 
         for row_buttons in self.buttons:
             for btn in row_buttons:
                 btn.setEnabled(False)
                 
+        self.time_label.setText("Time: 0s (Game Over!)")        
         print(f"Game Over! Final Score: {self.score}")
         
         # To save score (how many times user made hit)
